@@ -11,19 +11,19 @@
             <ul>
 
                 <li>
-                    <a href="#1"><i class="fa fa-image"></i> <em>主页</em></a>
+                    <a href="#1" v-on:click="updateNav('index')"><i class="fa fa-image"></i> <em>主页</em></a>
                 </li>
 
                 <li>
-                    <a href="#2" v-on:click="updateImages()"><i class="fa fa-image"></i> <em>相册</em></a>
+                    <a href="#2" v-on:click="updateNav('images')"><i class="fa fa-image"></i> <em>相册</em></a>
                 </li>
 
                 <li>
-                    <a href="#3"><i class="fa fa-home"></i> <em>画师介绍</em></a>
+                    <a href="#3" v-on:click="updateNav('me')"><i class="fa fa-home"></i> <em>画师介绍</em></a>
                 </li>
 
                 <li>
-                    <a href="#4"><i class="fa fa-envelope"></i> <em>联系我</em></a>
+                    <a href="#4" v-on:click="updateNav('call')"><i class="fa fa-envelope"></i> <em>联系我</em></a>
                 </li>
             </ul>
         </nav>
@@ -31,9 +31,9 @@
         <!-- 详情 -->
         <div class="slides">
             <!-- 首页 -->
-            <!-- <div class="slide" id="1">
->
-            </div> -->
+            <div class="slide" id="1">
+
+            </div>
 
             <!-- 相册 -->
             
@@ -41,7 +41,7 @@
                     <div class="content fourth-content">
                         <div class="container-fluid">
                             <transition name="el-zoom-in-center">
-                                <div class="row" v-show="images">
+                                <div class="row" v-show="nav == 'images'">
 
                                     <div class="col-md-4 col-sm-6">
                                         <div class="item">
@@ -260,95 +260,104 @@
 
 
             <!-- 自我介绍 -->
-            <!-- <div class="slide" id="3">
+            <div class="slide" id="3">
                 <div class="content first-content">
                     <div class="container-fluid">
-                        <div class="col-md-3">
-                            <div class="author-image"><img src="../../assets/img/author_image.png" alt="" /></div>
-                        </div>
-                        <div class="col-md-9">
-                            <h2>ZAZ</h2>
-                            <p>
-                                一只胖胖的老母猪
-                            </p>
-                            <div class="main-btn"><a href="#2">Read Images</a></div>
-                            <div class="fb-btn"><a href="#4">GO INDEX</a></div>
-                        </div>
+
+                        <transition name="el-zoom-in-center">
+                            <div v-show="nav == 'me'">
+                                <div class="col-md-3">
+                                    <div class="author-image"><img src="../../assets/img/author_image.png" alt="" /></div>
+                                </div>
+                                <div class="col-md-9">
+                                    <h2>ZAZ</h2>
+                                    <p>
+                                        一只胖胖的老母猪
+                                    </p>
+                                    <div class="main-btn"><a href="#2">Read Images</a></div>
+                                    <div class="fb-btn"><a href="#4">GO INDEX</a></div>
+                                </div>
+                            </div>
+                        </transition>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
             <!-- 联系我 -->
-            <!-- <div class="slide" id="4">
+            <div class="slide" id="4">
                 <div class="content fifth-content">
                     <div class="container-fluid">
-                        <div class="col-md-6">
-                            <div id="map">
-                                <iframe src="" width="100%" height="500px" frameborder="0" style="border: 0" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <form id="contact" action="" method="post">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <fieldset>
-                                            <input
-                                                name="name"
-                                                type="text"
-                                                class="form-control"
-                                                id="name"
-                                                placeholder="Your name..."
-                                                required=""
-                                            />
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <fieldset>
-                                            <input
-                                                name="email"
-                                                type="email"
-                                                class="form-control"
-                                                id="email"
-                                                placeholder="Your email..."
-                                                required=""
-                                            />
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <fieldset>
-                                            <input
-                                                name="subject"
-                                                type="text"
-                                                class="form-control"
-                                                id="subject"
-                                                placeholder="Subject..."
-                                                required=""
-                                            />
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <fieldset>
-                                            <textarea
-                                                name="message"
-                                                rows="6"
-                                                class="form-control"
-                                                id="message"
-                                                placeholder="Your message..."
-                                                required=""
-                                            ></textarea>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <fieldset>
-                                            <button type="submit" id="form-submit" class="btn">Send Now</button>
-                                        </fieldset>
+                        <transition name="el-zoom-in-center">
+                            <div v-show="nav == 'call'">
+                                <div class="col-md-6">
+                                    <div id="map">
+                                        <iframe src="" width="100%" height="500px" frameborder="0" style="border: 0" allowfullscreen></iframe>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="col-md-6">
+                                    <form id="contact" action="" method="post">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <fieldset>
+                                                    <input
+                                                        name="name"
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="name"
+                                                        placeholder="Your name..."
+                                                        required=""
+                                                    />
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <fieldset>
+                                                    <input
+                                                        name="email"
+                                                        type="email"
+                                                        class="form-control"
+                                                        id="email"
+                                                        placeholder="Your email..."
+                                                        required=""
+                                                    />
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <fieldset>
+                                                    <input
+                                                        name="subject"
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="subject"
+                                                        placeholder="Subject..."
+                                                        required=""
+                                                    />
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <fieldset>
+                                                    <textarea
+                                                        name="message"
+                                                        rows="6"
+                                                        class="form-control"
+                                                        id="message"
+                                                        placeholder="Your message..."
+                                                        required=""
+                                                    ></textarea>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <fieldset>
+                                                    <button type="submit" id="form-submit" class="btn">Send Now</button>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </transition>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
 
 
@@ -370,17 +379,14 @@ export default {
     data() {
         return {
             user: [],
-            images: false
+            nav: 'me'
         };
     },
     created() {},
     methods: {
-        updateImages() {
-            if(this.images){
-                this.images = false
-            }else{
-                this.images = true
-            }
+        updateNav(navName) {
+            this.nav = navName
+            console.log(this.nav)
         }
     }
 };
