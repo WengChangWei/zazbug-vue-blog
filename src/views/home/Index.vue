@@ -9,271 +9,39 @@
                 <img src="../../assets/img/mini_logo.png" alt="" />
             </div>
             <ul>
-
                 <li>
-                    <a href="#1" v-on:click="updateNav('index')"><i class="fa fa-image"></i> <em>主页</em></a>
+                    <a href="#1" v-on:click="updateNav('me')"><em>画师介绍</em></a>
                 </li>
 
-                <li>
-                    <a href="#2" v-on:click="updateNav('images')"><i class="fa fa-image"></i> <em>相册</em></a>
-                </li>
-
-                <li>
-                    <a href="#3" v-on:click="updateNav('me')"><i class="fa fa-home"></i> <em>画师介绍</em></a>
-                </li>
-
-                <li>
-                    <a href="#4" v-on:click="updateNav('call')"><i class="fa fa-envelope"></i> <em>联系我</em></a>
+                <li v-for="item in navList" :key="item.index">
+                    <a href="#" v-on:click="item.navSign = !item.navSign"
+                        ><em>{{ item.name }}</em></a
+                    >
+                    <transition name="el-zoom-in-top" v-for="son in item.children" :key="son.index">
+                        <a v-show="item.navSign" href="#2" v-on:click="updateNav('images')"
+                            ><em>{{ son.name }}</em></a
+                        >
+                    </transition>
                 </li>
             </ul>
         </nav>
 
         <!-- 详情 -->
         <div class="slides">
-            <!-- 首页 -->
-            <div class="slide" id="1">
-
-            </div>
-
-            <!-- 相册 -->
-            
-                <div class="slide" id="2">
-                    <div class="content fourth-content">
-                        <div class="container-fluid">
-                            <transition name="el-zoom-in-center">
-                                <div class="row" v-show="nav == 'images'">
-
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="#" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Number One</h2>
-                                                            <p>Quisque sit amet lacus in diam pretium faucibus. Cras vel justo lorem.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/first_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="../../assets/img/second_big_item.jpg" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Number Two</h2>
-                                                            <p>
-                                                                Donec eget dictum tellus. Curabitur a interdum diam. Nulla vestibulum porttitor
-                                                                porta.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/second_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="../../assets/img/third_big_item.jpg" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Number Three</h2>
-                                                            <p>Cras varius dolor et augue fringilla, eu commodo sapien iaculis.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/third_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="../../assets/img/fourth_big_item.jpg" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Number Four</h2>
-                                                            <p>Vestibulum augue ex, finibus sit amet nisi id, maximus ultrices ipsum.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/fourth_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="../../assets/img/fifth_big_item.jpg" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Fifth Item</h2>
-                                                            <p>Donec commodo, ex nec rutrum venenatis, nisi nisl malesuada magna.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/fifth_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="../../assets/img/sixth_big_item.jpg" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Sixth Item</h2>
-                                                            <p>Maecenas dapibus neque sed nisl consectetur, id semper nisi egestas.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/sixth_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="../../assets/img/seventh_big_item.jpg" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Number Seven</h2>
-                                                            <p>Etiam aliquet, est id varius fringilla, eros libero pellentesque lectus.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/seventh_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="../../assets/img/eight_big_item.jpg" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Number Eight</h2>
-                                                            <p>Vestibulum augue ex, finibus sit amet nisi id, maximus ultrices ipsum.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/eight_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="../../assets/img/ninth_big_item.jpg" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Number Nine</h2>
-                                                            <p>Orci varius natoque penatibus et magnis dis parturient montes.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/ninth_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="../../assets/img/fifth_big_item.jpg" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Number Ten</h2>
-                                                            <p>Vestibulum augue ex, finibus sit amet nisi id, maximus ultrices ipsum.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/fifth_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="../../assets/img/first_big_item.jpg" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Eleventh Item</h2>
-                                                            <p>Cras varius dolor et augue fringilla, eu commodo sapien iaculis.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/first_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="item">
-                                            <div class="thumb">
-                                                <a href="../../assets/img/second_big_item.jpg" data-lightbox="image-1">
-                                                    <div class="hover-effect">
-                                                        <div class="hover-content">
-                                                            <h2>Twelvth Item</h2>
-                                                            <p>Etiam tincidunt magna ex, sit amet lobortis felis bibendum id.</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="image">
-                                                    <img src="../../assets/img/second_item.jpg" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </transition>
-                        </div>
-                    </div>
-                </div>
-            
-
-
             <!-- 自我介绍 -->
-            <div class="slide" id="3">
+            <div class="slide" id="1">
                 <div class="content first-content">
                     <div class="container-fluid">
-
                         <transition name="el-zoom-in-center">
                             <div v-show="nav == 'me'">
                                 <div class="col-md-3">
-                                    <div class="author-image"><img src="../../assets/img/author_image.png" alt="" /></div>
+                                    <div class="author-image">
+                                        <img src="../../assets/img/author_image.png" alt="" />
+                                    </div>
                                 </div>
                                 <div class="col-md-9">
                                     <h2>ZAZ</h2>
-                                    <p>
-                                        一只胖胖的老母猪
-                                    </p>
+                                    <p>一只胖胖的老母猪</p>
                                     <div class="main-btn"><a href="#2">Read Images</a></div>
                                     <div class="fb-btn"><a href="#4">GO INDEX</a></div>
                                 </div>
@@ -283,15 +51,78 @@
                 </div>
             </div>
 
+            <!-- 相册 -->
+
+            <div class="slide" id="2">
+                <div class="content fourth-content">
+                    <div class="container-fluid">
+                        <transition name="el-zoom-in-center">
+                            <div class="row" v-show="nav == 'images'">
+                                <div class="col-md-4 col-sm-6" v-for="item in imgList" :key="item.index">
+                                    <div class="item">
+                                        <div class="thumb">
+                                            <!-- <div class="hover-effect">
+                                                    <div class="hover-content">
+                                                        <h2>Number One</h2>
+                                                        <p>Quisque sit amet lacus in diam pretium faucibus. Cras vel justo lorem.</p>
+                                                    </div>
+                                                </div> -->
+
+                                            <div class="image">
+                                                <!-- <img src="../../assets/img/first_item.jpg" /> -->
+                                                <el-image
+                                                    style="max-width: 100%; height: 400px"
+                                                    fit="cover"
+                                                    :src="item"
+                                                    :preview-src-list="[item]"
+                                                ></el-image>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-md-4 col-sm-6">
+                                    <div class="item">
+                                        <div class="thumb">
+                                            <a href="../../assets/img/second_big_item.jpg" data-lightbox="image-1">
+                                                <div class="hover-effect">
+                                                    <div class="hover-content">
+                                                        <h2>Number Two</h2>
+                                                        <p>
+                                                            Donec eget dictum tellus. Curabitur a interdum diam. Nulla vestibulum porttitor
+                                                            porta.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="image">
+                                                <img src="../../assets/img/second_item.jpg" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </transition>
+                    </div>
+                </div>
+            </div>
+
             <!-- 联系我 -->
-            <div class="slide" id="4">
+            <div class="slide" id="3">
                 <div class="content fifth-content">
                     <div class="container-fluid">
                         <transition name="el-zoom-in-center">
                             <div v-show="nav == 'call'">
                                 <div class="col-md-6">
                                     <div id="map">
-                                        <iframe src="" width="100%" height="500px" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                                        <iframe
+                                            src=""
+                                            width="100%"
+                                            height="500px"
+                                            frameborder="0"
+                                            style="border: 0"
+                                            allowfullscreen
+                                        ></iframe>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -358,9 +189,6 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
 
         <!-- <div class="footer">
@@ -379,14 +207,65 @@ export default {
     data() {
         return {
             user: [],
-            nav: 'me'
+            nav: 'me',
+            navList: [
+                {
+                    name: '参与项目',
+                    navSign: false,
+                    children: [
+                        {
+                            name: '魔域'
+                        },
+                        {
+                            name: '剑网3'
+                        }
+                    ]
+                },
+                {
+                    name: '练习图',
+                    navSign: false,
+                    children: [
+                        {
+                            name: '插画'
+                        },
+                        {
+                            name: '设计'
+                        },
+                        {
+                            name: '速写'
+                        }
+                    ]
+                }
+            ],
+            imgList: [
+                'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png',
+                'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png',
+                'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png',
+                'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
+                'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png'
+            ]
         };
     },
     created() {},
     methods: {
         updateNav(navName) {
-            this.nav = navName
-            console.log(this.nav)
+            this.nav = navName;
+            console.log(this.nav);
         }
     }
 };
@@ -396,21 +275,6 @@ export default {
 .slides .slide {
     background-image: url(../../assets/img/bg.jpg);
 }
-/* .slides .slide:nth-child(1) {
-    background-image: url(../../assets/img/first_bg.jpg);
-}
-.slides .slide:nth-child(2) {
-    background-image: url(../../assets/img/second_bg.jpg);
-}
-.slides .slide:nth-child(3) {
-    background-image: url(../../assets/img/third_bg.jpg);
-}
-.slides .slide:nth-child(4) {
-    background-image: url(../../assets/img/fourth_bg.jpg);
-}
-.slides .slide:nth-child(5) {
-    background-image: url(../../assets/img/fifth_bg.jpg);
-} */
 .slides .slide img {
     width: 100%;
 }
