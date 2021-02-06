@@ -18,7 +18,7 @@
                         ><em>{{ item.name }}</em></a
                     >
                     <transition name="el-zoom-in-top" v-for="son in item.children" :key="son.index">
-                        <a v-show="item.navSign" href="#2" v-on:click="updateNav('images')"
+                        <a v-show="item.navSign" href="#2" v-on:click="updateNav('images',son.id)"
                             ><em>{{ son.name }}</em></a
                         >
                     </transition>
@@ -36,14 +36,18 @@
                             <div v-show="nav == 'me'">
                                 <div class="col-md-3">
                                     <div class="author-image">
-                                        <img src="../../assets/img/author_image.png" alt="" />
+                                        <img v-if="user.headPic" :src="user.headPic" alt="" />
+                                        <img v-else src="../../assets/img/author_image.png" alt="" />
                                     </div>
                                 </div>
                                 <div class="col-md-9">
-                                    <h2>ZAZ</h2>
-                                    <p>一只胖胖的老母猪</p>
-                                    <div class="main-btn"><a href="#2">Read Images</a></div>
-                                    <div class="fb-btn"><a href="#4">GO INDEX</a></div>
+                                    <h2>{{user.nickname}}</h2>
+                                    <p>{{user.introduce}}</p>
+                                    <p v-if="user.weibo"><i class="el-icon-s-promotion"></i> 微博: {{user.weibo}}</p>
+                                    <p v-if="user.qq"><i class="el-icon-chat-line-round"></i> QQ:{{user.qq}}</p>
+                                    <p v-if="user.email"><i class="el-icon-chat-line-square"></i> Email: {{user.email}}</p>
+                                    <!-- <div class="main-btn">Read Images</div> -->
+                                    <!-- <div class="fb-btn">GO INDEX</div> -->
                                 </div>
                             </div>
                         </transition>
@@ -52,7 +56,6 @@
             </div>
 
             <!-- 相册 -->
-
             <div class="slide" id="2">
                 <div class="content fourth-content">
                     <div class="container-fluid">
@@ -61,20 +64,14 @@
                                 <div class="col-md-4 col-sm-6" v-for="item in imgList" :key="item.index">
                                     <div class="item">
                                         <div class="thumb">
-                                            <!-- <div class="hover-effect">
-                                                    <div class="hover-content">
-                                                        <h2>Number One</h2>
-                                                        <p>Quisque sit amet lacus in diam pretium faucibus. Cras vel justo lorem.</p>
-                                                    </div>
-                                                </div> -->
 
                                             <div class="image">
                                                 <!-- <img src="../../assets/img/first_item.jpg" /> -->
                                                 <el-image
-                                                    style="max-width: 100%; height: 400px"
+                                                    style="max-width: 100%; height: 300px"
                                                     fit="cover"
-                                                    :src="item"
-                                                    :preview-src-list="[item]"
+                                                    :src="item.url"
+                                                    :preview-src-list="[item.url]"
                                                 ></el-image>
                                             </div>
                                         </div>
@@ -202,70 +199,97 @@
 <script>
 import '../../assets/css/bootstrap.min.css';
 import '../../assets/css/templatemo-main.css';
+import { getUserInfo, getCateList, getImagesList } from '@/api/index';
 export default {
     name: 'dashboard',
     data() {
         return {
             user: [],
+            page: 1,
+            size: 20,
             nav: 'me',
-            navList: [
-                {
-                    name: '参与项目',
-                    navSign: false,
-                    children: [
-                        {
-                            name: '魔域'
-                        },
-                        {
-                            name: '剑网3'
-                        }
-                    ]
-                },
-                {
-                    name: '练习图',
-                    navSign: false,
-                    children: [
-                        {
-                            name: '插画'
-                        },
-                        {
-                            name: '设计'
-                        },
-                        {
-                            name: '速写'
-                        }
-                    ]
-                }
-            ],
+            navList: [],
             imgList: [
-                'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png',
-                'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png',
-                'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png',
-                'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
-                'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png'
-            ]
+                // 'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png',
+                // 'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png',
+                // 'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png',
+                // 'https://ak.hypergryph.com/upload/images/20190228/118078295785f64dac736c6ade50bb76.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/5ab924ca70fdd333874412454cf79a93.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/b7c130198e0e97f03aa9b3fa7f153d5e.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/b18b912d69fa0b3d571054c8f5fda5cf.jpg',
+                // 'https://ak.hypergryph.com/upload/images/20190228/2429173247490fcf217ca6f0a95ab00d.png'
+            ],
+            navImageList: []
         };
     },
-    created() {},
+    created() {
+        this.getData();
+    },
     methods: {
-        updateNav(navName) {
+        updateNav(navName,cateId = 0) {
             this.nav = navName;
-            console.log(this.nav);
+            let list = this.navImageList;
+            if(cateId != 0){
+                // console.log(list[cateId])
+                this.imgList = list[cateId]
+            }
+        },
+        getData() {
+            // 获取博主信息
+            getUserInfo().then((res) => {
+                if (res.data.flag) {
+                    this.user = res.data.data;
+                }
+            });
+
+            // 获取分类
+            getCateList().then((res) => {
+                if (res.data.flag) {
+                    var list = res.data.data.list;
+                    list.forEach((element) => {
+                        element.navSign = false;
+                    });
+                    this.navList = list;
+                    this.getNavImagesList();
+                }
+            });
+        },
+        getNavImagesList() {
+            this.navList.forEach((element) => {
+                element.children.forEach((el) => {
+                    if(el.parentId > 0){
+                        this.getImages(el.id, this.page, this.size);
+                    }
+                });
+                // console.log(this.navImageList);
+            });
+        },
+        // 获取图片
+        getImages(cateId, page, size) {
+            let params = {
+                cateId: cateId,
+                page: page,
+                size: size
+            };
+            let array = [];
+            getImagesList(params).then((res) => {
+                if (res.data.flag) {
+                    array = res.data.data.list;
+                    this.navImageList[cateId] = array;
+                }
+            });
         }
     }
 };

@@ -6,9 +6,13 @@ import http from '../utils/http';
  */
 
  export function getUserInfo(){
-     return http.get('/user');
+     return http.get('/client/userInfo');
  }
 
- export function putUserInfo(params){
-     return http.put('/user',params);
- }
+export function getCateList(){
+    return http.get('/client/category/list/1/100')
+}
+
+export function getImagesList(params){
+    return http.get('/client/images/list/',params)
+}
